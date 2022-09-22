@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Studies</h4>
+                        <mat-form-field appearance="outline" style="float: right;margin: -36px 100px -30px 0;">
+                            <mat-label>Organisation</mat-label>
+                            <mat-select [(ngModel)]="orgId">
+                                <mat-option *ngFor="let org of organisations" [value]="org.id" (click)="loadStudy(org.id)">
+                                    {{org.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button class="btn btn-sm btn-warning position-absolute" style="right: 15px;top: 9px;" (click)="create()">
+                            Create
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let study of studies">
+                                    <td>{{study.id}}</td>
+                                    <td>{{study.title}}</td>
+                                    <td>{{study.description}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" (click)="edit(study)">Edit</button>
+                                        <button class="btn btn-sm btn-danger" (click)="delete(study)">Delete</button>
+                                        <button [routerLink]="['../studyDetail', study.id]" class="btn btn-sm btn-muted">View</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editStudyDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    <span *ngIf="!editStudy">Create</span>
+                    <span *ngIf="editStudy">Edit</span>
+                    Study
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Title" [(ngModel)]="title">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Description" [(ngModel)]="description"></textarea>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Patients</mat-label>
+                    <mat-select [formControl]="patientList" multiple [(ngModel)]="selectedPatients">
+                        <mat-option *ngFor="let patient of patients" [value]="patient.id">{{patient.first_name}} {{patient.last_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{study.title}}</h1>
+            </div>
+            <div class="col-md-12">
+                <h4>{{study.description}}</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Patients in Study</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let patient of study.patients">
+                                    <td>{{patient.id}}</td>
+                                    <td>{{patient.first_name}} {{patient.last_name}}</td>
+                                    <td>{{patient.age}}</td>
+                                    <td>{{patient.notes}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" (click)="openAddRecordDialog(patient)">Add Record</button>
+                                        <button class="btn btn-sm btn-muted" (click)="openHistoryRecordDialog(patient)">History</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addRecordDialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 600px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    Study
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Do you smoke?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[0]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you drink alcohol?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[1]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have unexplained pain??</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[2]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have a long history of staying up late?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[3]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have a fever?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[4]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Are you nauseated or vomiting?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[5]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Are you coughing?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[6]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have a history of drug allergies?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[7]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have heart disease?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[8]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Do you have high blood pressure?</td>
+                        <td>
+                            <mat-radio-group [(ngModel)]="questions[9]">
+                                <mat-radio-button value="0">Yes</mat-radio-button>
+                                <span style="margin-right: 10px;"> </span>
+                                <mat-radio-button value="1">No</mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </tr>
+                </table>
+                <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Notes" [(ngModel)]="notes"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="historyRecordDialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 600px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    {{currentPatient.first_name + ' ' + currentPatient.last_name}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr *ngFor="let record of records">
+                        <td>{{record.record_time.split('T')[0]}}</td>
+                        <td>{{record.notes}}</td>
+                        <td>{{record.score}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
