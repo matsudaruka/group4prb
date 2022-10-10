@@ -147,9 +147,9 @@ app.post('/studies', function (req, res) {
 })
 
 app.get('/studies', function (req, res) {
-    connection.query(`SELECT *
-                      from study
-                      where org_id = ${req.query.orgId}`, (err, rows, fields) => {
+    connection.query(`SELECT study.id, study.title, study.description, study.status, study.org_id, count(patient.id) as number_of_patients
+                      from study left join patient on(patient.study_id=study.id)
+                      where org_id = ${req.query.orgId} group by study.id, study.title, study.description, study.org_id, study.status order by status desc`, (err, rows, fields) => {
         if (err) throw err
         if (!rows) {
             res.send(null);
@@ -193,16 +193,28 @@ app.get('/patients/available', function (req, res) {
 })
 
 app.delete('/studies', function (req, res) {
-    connection.query(`update patient set study_id=NULL where study_id=${req.query.id}`, (err, rows, fields) => {
-        if (err) throw err
-        connection.query(`delete
+    console.log('======', req.query.action);
+    if(req.query.action){
+        console.log('if======', req.query.action);
+        connection.query(`update patient set study_id=NULL where study_id=${req.query.id}`, (err, rows, fields) => {
+            if (err) throw err
+            connection.query(`update study set status='Completed' where id = ${req.query.id}`, (err, rows, fields) => {
+                if (err) throw err
+                res.send({result: true});
+            })
+        })
+    } else {
+        console.log('else======', req.query.action);
+        connection.query(`update patient set study_id=NULL where study_id=${req.query.id}`, (err, rows, fields) => {
+            if (err) throw err
+            connection.query(`delete
                       from study
                       where id = ${req.query.id}`, (err, rows, fields) => {
-            if (err) throw err
-            res.send({result: true});
+                if (err) throw err
+                res.send({result: true});
+            })
         })
-    })
-
+    }
 })
 
 app.get('/studies/:studyId/patients/:patientId/records', function (req, res) {

@@ -62,6 +62,15 @@ export class StudyComponent implements OnInit {
     }
   }
 
+  complete(study: Study): void {
+    if (confirm(`Are you sure to complete the study ${study.title}?`)) {
+      this.http.delete<Array<Study>>('http://localhost:9080/studies?action=complete&id=' + study.id).subscribe((response) => {
+        this.load();
+      });
+    }
+  }
+
+
   edit(study: Study): void {
     this.editStudy = study;
     this.title = study.title;

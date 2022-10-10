@@ -191,7 +191,13 @@
                     <tr *ngFor="let record of records">
                         <td>{{record.record_time.split('T')[0]}}</td>
                         <td>{{record.notes}}</td>
-                        <td>{{record.score}}</td>
+                        <td>
+                            <span *ngIf="record.score<=3" class="text-danger">Unhealty</span>
+                            <span *ngIf="record.score>3 && record.score <=7" class="text-warning">Sub-healthy</span>
+                            <span *ngIf="record.score>7" class="text-success">Healty</span>
+                            ({{record.score}})
+
+                        </td>
                     </tr>
                 </table>
             </div>
